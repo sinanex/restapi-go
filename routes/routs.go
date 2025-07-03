@@ -13,14 +13,11 @@ import (
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
 
-	// PostgreSQL DSN
 	dsn := "host=localhost user=sinan password=sinan123 dbname=todo_db port=5432 sslmode=disable TimeZone=Asia/Kolkata"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic(fmt.Sprintf("Failed to connect to database: %v", err))
 	}
-
-	// Migrate and connect
 	model.MigrateTodos(db)
 	controller.SetDB(db)
 
